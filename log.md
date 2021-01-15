@@ -1,4 +1,6 @@
-
+# 前言模板
+大家好我是前端新手小猿同学：
+这篇文章主要给大家简单介绍一下<font color=red>如何在项目中使用gulp工具进行工程化</font>希望对大家的学习进步有所帮助，当然文章中可能存在理解不正确的地方希望大家可在评论区相互讨教，共同进步。。
 # 2.Angular模板语法、插值语法、事件绑定
     ## 1.插值语句
         介绍：
@@ -871,8 +873,93 @@ Banana,Orange,Apple,Mango
     在复制时也是一样，如果我们复制一个基本类型的值时，会创建一个新值，并把它保存在新的变量的位置上。而如果我们复制一个引用类型时，同样会把变量中的值复制一份放到新的变量空间里，但此时复制的东西并不是对象本身，而是指向该对象的指针。所以我们复制引用类型后，两个变量其实指向同一个对象，所以改变其中的一个对象，会影响到另外一个。就会出现像小李这样的bug，你虽然没有提交数据，但是修改弹出框的数据是从表格中
 
 
-#
+# 前言整理
 https://blog.csdn.net/weixin_43742274/article/details/111669496  2  Angular基础知识系列学习（二）--Angular模板语法、插值语法、事件绑定
 https://blog.csdn.net/weixin_43742274/article/details/111665076  3  Angular基础知识系列学习（三）--Angular内置基本指令介绍
 https://blog.csdn.net/weixin_43742274/article/details/111675317  4  Angular基础知识系列学习（四）--组件的创建、组件声明周期钩子函数
 https://blog.csdn.net/weixin_43742274/article/details/111689876  5  Angular基础知识系列学习（五）--父子组件传值，父传子，子传父，组件之间的通信
+
+
+
+# Gulp工具使用
+    1.Gulp简介：
+        Gulp.js是一个基于流的自动化构建工具，开发者可以使用它在项目开发过程中自动执行常见任务。
+        
+    2.Gulp优点：
+        1.gulp 将开发流程中让人痛苦或耗时的任务自动化，从而减少你所浪费的时间、创造更大价值。
+        2.代码优于配置、node 最佳实践、精简的 API 集，gulp 让工作前所未有的简单。
+        3.基于 node 强大的流(stream)能力，gulp 在构建过程中并不把文件立即写入磁盘，从而提高了构建速度。
+        4.遵循严格的准则，确保我们的插件结构简单、运行结果可控。
+    3.Gulp安装：
+        1.首先要确保电脑上已经安装过node.js环境，因为Gulp是基于Node环境运行的，如果没有安装Node环境请先安装Node环境，可以参考https://blog.csdn.net/weixin_43742274/article/details/107256505这篇文章去安装Node环境。
+        2.Gulp安装步骤：
+            1.全局安装Gulp
+                npm install -g gulp
+            2.全局安装完成之后，在你要使用Gulp的项目中再进行一次单独安装，第二种方式会将Gulp信息写入到package.json文件中
+                npm install gulp
+                npm install --save-dev gulp 
+    4.Gulp使用
+        完成全局安装和项目中安装之后，我们就可以在项目中使用Gulp进行工程化处理了。
+            1.如何创建：
+                需要我们在项目中与package.json文件同一级的目录下创建一个gulpfile.js文件，我们的gulp代码就主要在这个文件中书写。
+            2.如何使用：
+                比如我们穿件一个gulp任务，输出一个hello gulp。
+                要实现这样的场景我们首先需要在gulpfile.js文件中引入gulp，然后创建一个自定义任务让这个任务去输出对应的值
+
+                var gulp = require('gulp');
+                gulp.task('helloTask',function(){
+                    console.log('hello gulp');
+                });
+            3.如何运行gulp任务：
+                要运行gulp任务，只需切换到存放gulpfile.js文件的目录(windows平台请使用cmd或者Power Shell等工具)，然后在命令行中执行gulp命令就行了。
+                比如我们执行 helloTask
+                gulp helloTask
+                如图：
+    5.Gulp常用API
+        1.task()
+            1.介绍：
+                gulp.task方法用来定义任务
+            2.实现：
+                gulp.task(name[deps1,deps2,deps3], fn)
+                name 为任务名
+                deps 是当前定义的任务需要依赖的其他任务，为一个数组。当前定义的任务会在所有依赖的任务执行完毕后才开始执行。如果没有依赖，则可省略这个参数
+                fn 为任务函数，我们把任务要执行的代码都写在里面。该参数也是可选的。
+            3.案例：
+                一次执行多个相互有依赖的任务：
+                    gulp.task('oneTask',function(){
+                    //one是一个异步执行的任务
+                        setTimeout(function(){
+                            console.log('one is done')
+                        },5000);
+                    });
+                    //two任务虽然依赖于one任务,但并不会等到one任务中的异步操作完成后再执行
+                    gulp.task('twoTask',['one'],function(){
+                    console.log('two is done');
+                    });
+                处理依赖为异步的情况：当多个任务当中存在异步的任务时并不会等待异步的任务执行完成之后再执行下一项依赖，那么我们要如何处理
+
+        2.src()
+        3.dest()
+        4.watch()
+    6.Gulp常用插件
+        1. 自动加载插件(gulp-load-plugins)
+            1.安装
+            2.
+        2. 重命名
+        3. js文件压缩
+        4. css文件压缩
+        5. html文件压缩
+
+
+        6. less和sass的编译
+        7. 图片压缩
+        8. ES6 转换成 ES5 
+            1. 安装babel
+            npm install --save-dev gulp-babel babel-core
+            1. 安装 ES6 转换成 ES5 插件
+            npm install --save-dev babel-preset-es2015
+            3.实现代码：
+
+
+
+# 前端雄起--再也不用求后端写接口了（NodeJS + Express + MongoDB实现全栈开发）
