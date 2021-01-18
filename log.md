@@ -1,6 +1,8 @@
 # 前言模板
+<font color="#999AAA">
 大家好我是前端新手小猿同学：
 这篇文章主要给大家简单介绍一下<font color=red>如何在项目中使用gulp工具进行工程化</font>希望对大家的学习进步有所帮助，当然文章中可能存在理解不正确的地方希望大家可在评论区相互讨教，共同进步。。
+</font>
 # 2.Angular模板语法、插值语法、事件绑定
     ## 1.插值语句
         介绍：
@@ -1030,4 +1032,60 @@ https://blog.csdn.net/weixin_43742274/article/details/111689876  5  Angular基�
 
 
 
-# 前端雄起--再也不用求后端写接口了（NodeJS + Express + MongoDB实现全栈开发）
+# 前端造轮子-在Vue项目中封装cookie、localStorage工具类
+1.与static文件同级新建utils文件夹，在utils文件夹下创index.js文件，
+在main.js中引入utils文件。
+
+import utils from './utils'
+Vue.use(utils);
+在index.js中定义工具类
+let prototype = {
+    1.localStorage工具类
+    $setStroage(key,value){
+        window.localStorage.setItem(key,value)
+    }
+
+    $getStroage(key){
+        window.localStorage.getItem(key)
+    }
+
+    $removeStroage(key){
+        window.localStorage.removeItem(key)
+    }
+    2.cookie工具类
+    $setCookie(cname, cvalue, exdays) {
+        exdays 过期时间
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    $getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name) == 0) { return c.substring(name.length, c.length); }
+        }
+        return "";
+    } 
+    $delCookie (name) {
+      var exp = new Date();
+      exp.setTime(exp.getTime() - 1);
+      var cval = this.$getCookie(name);
+      if (cval != null)
+       document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+     };
+}
+let utils = function (Vue) {
+  for (let i in prototype) {
+    Vue.prototype[i] = prototype[i]
+  }
+};
+export default utils
+使用：
+this.$setStroage('name','张三')
+this.$getStroage('name')
+
+
+
