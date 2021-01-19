@@ -1035,7 +1035,6 @@ https://blog.csdn.net/weixin_43742274/article/details/111689876  5  Angular基�
 # 前端造轮子-在Vue项目中封装cookie、localStorage工具类
 1.与static文件同级新建utils文件夹，在utils文件夹下创index.js文件，
 在main.js中引入utils文件。
-
 import utils from './utils'
 Vue.use(utils);
 在index.js中定义工具类
@@ -1089,3 +1088,10 @@ this.$getStroage('name')
 
 
 
+
+
+
+
+
+
+# Node.js Express 创建本地服务
