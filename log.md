@@ -1204,4 +1204,19 @@ this.$getStroage('name')
 
 
 
+# 前端项目中封装一个echarts数据展示组件
+前提要求：
+    安装echarts
+    npm install echarts
+    使用引入：
+    import echarts from 'echarts'
+    Vue.prototype.$echarts = echarts 
+
+    1.与pages文件夹同级创建components文件夹用来存放组件
+    2.创建index.js
+    3.在main.js中引入components文件夹并使用
+        import components from './components/index'
+        Vue.use(components);
+    4.在components文件夹中穿件line.js
+
 # MongoDB常用sql语句解析：
