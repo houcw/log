@@ -1,13 +1,10 @@
 const express = require('express');
 
-const home = express.Router();
+const goods = express.Router();
 
-home.get('/index',(req,res)=>{
-    res.send('index.首页');
+goods.get('/goodslist',(req,res)=>{
+    res.send('goodslist列表');
 })
 
-home.get('/list',(req,res)=>{
-    res.send('index.列表页');
-})
 
-module.exports = home
+module.exports = goods

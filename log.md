@@ -1095,3 +1095,113 @@ this.$getStroage('name')
 
 
 # Node.js Express 创建本地服务
+    const express = require('express')
+    const bodyParser = require('body-parser');
+    const app = express()
+
+    //设置跨域访问
+    app.all('*', function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With");
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+        res.header("X-Powered-By", ' 3.2.1')
+        res.header("Content-Type", "application/json;charset=utf-8");
+        next();
+    });
+    // 获取请求参数
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    // 定义参数的格式
+    app.use(bodyParser.json());
+
+    // 配置路由模块
+    const admin = require('./router/admin');
+    const goods = require('./router/goods');
+
+    // 管理权限模块
+    app.use('/admin', admin);
+    // 商品模块
+    app.use('/goods', goods);
+
+    app.listen(3000, () => console.log('服务器启动成功'))
+
+
+
+# Node.js 连接MySQL数据库
+    ## 安装mysql插件
+    npm install mysql
+    ## 连接数据库 注意：（输入正确的user用户信息和密码）
+    var mysql      = require('mysql');
+# Node.js 连接MongoDB数据库实现增删改查的基本功能
+大家好我是前端新手小猿同学：
+这篇文章主要给大家简单介绍一下<font color=red>如何使用Node.js 连接MongoDB数据库实现增删改查的基本功能</font>希望对大家的学习进步有所帮助，当然文章中可能存在理解不正确的地方希望大家可在评论区相互讨教，共同进步。。
+    ## 安装MongoDB插件
+       npm install mongodb 
+    ## 创建连接
+    要在 MongoDB 中创建一个数据库，首先我们需要创建一个 MongoClient 对象，然后配置好指定的 URL 和 端口号。
+    如果数据库不存在，MongoDB 会创建新的数据库并建立连接。
+    // 引入并创建MongoClient对象
+    var MongoClient = require('mongodb').MongoClient;
+    // 设置对应的连接地址
+    // 如果你没有test数据库，连接的时候会自动给创建的名为test的数据库
+    var url = "mongodb://localhost:27017/test";
+    //  连接数据库
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        console.log("数据库连接成功");
+        db.close();
+    });
+    // 说明：一般情况下在进行数据库操作之前我会根据需求文档先设计好对应的数据库、集合以及集合中所需的字段
+    //  利用Promise对象 对数据库进行操作 
+    const MongoClient = require("mongodb").MongoClient;
+    const url = "mongodb://localhost/";
+    MongoClient.connect(url).then((conn) => {
+        console.log("数据库已连接");
+        const test = conn.db("testdb").collection("test");
+        // 增加
+        test.insertOne({ "测试": "1111" }).then((res) => {
+            // 查询
+            return test.find().toArray().then((arr) => {
+                console.log(arr);
+            });
+        }).then(() => {
+            // 更改
+            return test.updateMany({ "测试": "222" },
+                { $set: { "测试2": "333" } });
+        }).then((res) => {
+            // 查询
+            return test.find().toArray().then((arr) => {
+                console.log(arr);
+            });
+        }).then(() => {
+            // 删除
+            return test.deleteMany({ "测试2": "333" });
+        }).then((res) => {
+            // 查询
+            return test.find().toArray().then((arr) => {
+                console.log(arr);
+            });
+        }).catch((err) => {
+            console.log("数据操作失败" + err.message);
+        }).finally(() => {
+            conn.close();
+        });
+    }).catch((err) => {
+        console.log("数据库连接失败");
+    });
+
+    // 输出
+    // 连接成功提示
+    数据库已连接
+    // 第一次增加操作
+    [ { _id: 5f1664966833e531d83d3ac6, 测试: '222' } ]
+    // 修改数据之后
+    [ { _id: 5f1664966833e531d83d3ac6, 测试2: '333' } ]
+    // 删除数据之后查询数据
+    []
+
+
+
+
+# MongoDB常用sql语句解析：
