@@ -1220,3 +1220,33 @@ this.$getStroage('name')
     4.在components文件夹中穿件line.js
 
 # MongoDB常用sql语句解析：
+
+
+
+# echarts 
+option对象中series[]中设置label的数据展示格式，利用formatter自定义一个数据处理函数，首先通过遍历option.series[0].data也就是我们的y轴上显示的数据，计算出所有的数据总和，然后再遍历option.xAxis[0].data，使用每一项的数值和上面计算出来的总计计算出对应的百分比，return出我们想要的数据格式，
+    注意：这两个循环不能写在一起，sum的计算要单独写出（不分开写会出现闭包，每次只能计算出所有数据最后一项的占比，其余不会计算出来），并且还要在和option同级的地方初始化sum，计算sum每次都需要给其设置初始值，否则会出现sum一直累加不清0的bug
+label: {
+  show: true,
+  position: "top",
+  color: "#33
+  formatter: function (params) {
+    // 计算 sum
+    for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+       sum = 0
+      if (option.xAxis[0].data[i] == params.name) {
+        for (i = 0; i < option.series[0].data.length; i++) {
+          sum += option.series[0].data[i];
+        }
+      }
+    }
+    for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+      var val1 = params.value || 0;
+      var val2 = option.series[0].data[i] || 0;
+      return val1 + '\n'+((val1*100/sum)).toFixed(2)+"%";
+    }
+  },
+},
+这篇文章主要记录最近遇到的echarts个性化需求，看了很多博客大家好像都没有对这方面的处理，所有博主将这次处理的过程记录下来，供大家参考，希望大家在以后的工作中遇到类似的需求可以用到，
+
+# 11
